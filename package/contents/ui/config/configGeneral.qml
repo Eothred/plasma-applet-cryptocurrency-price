@@ -36,10 +36,16 @@ Item {
 			Layout.minimumWidth: theme.mSize(theme.defaultFont).width * 40
 			model: [{
 				text: i18n("Bitstamp BTC-USD"),
-				url: "https://www.bitstamp.net/api/ticker/",
+				url: "https://www.bitstamp.net/api/v2/ticker/btcusd/",
 				key: "last",
 				tooltip: "Bitstamp BTC-USD",
 				symbol: "$"
+			}, {
+				text: i18n("Bitstamp ETH-EUR"),
+				url: "https://www.bitstamp.net/api/v2/ticker/etheur/",
+				key: "last",
+				tooltip: "Bitstamp ETH-EUR",
+				symbol: "€"
 			}, {
 				text: i18n("Binance ETH-BTC"),
 				url: "https://api.binance.com/api/v3/ticker/price?symbol=ETHBTC",
