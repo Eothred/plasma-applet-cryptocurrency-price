@@ -18,7 +18,7 @@ Price conversion options can be found in the 'Price Conversion' sub-category.
 For icons, i recommend downloading the respective coin images from coinranking.com.
 
 ### Example 1 - BTC-USD last price on Bitstamp
-Exchange URL: https://www.bitstamp.net/api/ticker/
+Exchange URL: https://www.bitstamp.net/api/v2/ticker/btcusd/
 
 JSON Key: last
 

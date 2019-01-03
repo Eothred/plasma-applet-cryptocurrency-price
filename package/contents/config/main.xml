@@ -7,7 +7,7 @@
   <group name="General">
     <entry name="xeUrlA" type="String">
       <label>Exchange URL</label>
-      <default>https://www.bitstamp.net/api/ticker/</default>
+      <default>https://www.bitstamp.net/api/v2/ticker/btcusd/</default>
     </entry>
     <entry name="xeKeyA" type="String">
       <label>JSON Key</label>
@@ -83,7 +83,7 @@
     </entry>
     <entry name="xeUrlB" type="String">
       <label>Base to fiat url</label>
-      <default>https://www.bitstamp.net/api/ticker/</default>
+      <default>https://www.bitstamp.net/api/v2/ticker/btcusd/</default>
     </entry>
     <entry name="xeKeyB" type="String">
       <label>Base to fiat JSON Key</label>
