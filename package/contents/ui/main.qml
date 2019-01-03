@@ -16,6 +16,7 @@ Item {
 	property string cryptoRateA: '...'
 	property string cryptoRateB: '...'
 	property string cryptoRateC: '...'
+	property string cryptoRateD: '...'
 	property bool showPricePrefix: plasmoid.configuration.showPricePrefix
 	property bool showPriceSuffix: plasmoid.configuration.showPriceSuffix
 	property bool showIcon: plasmoid.configuration.showIcon
@@ -26,6 +27,7 @@ Item {
 	property bool multiFixed: plasmoid.configuration.multiFixed
 	property bool multiExternalB: plasmoid.configuration.multiExternalB
 	property bool multiExternalC: plasmoid.configuration.multiExternalC
+	property bool multiExternalD: plasmoid.configuration.multiExternalD
 	
 	Plasmoid.preferredRepresentation: Plasmoid.compactRepresentation
 	Plasmoid.toolTipTextFormat: Text.RichText
@@ -162,6 +164,10 @@ Item {
 				
 				if (plasmoid.configuration.multiExternalC) { // if fiat to fiat checked
 					root.cryptoRate = root.cryptoRate * root.cryptoRateC;
+				}
+				
+				if (plasmoid.configuration.multiExternalD) { // if crypto to crypto checked
+					root.cryptoRate = root.cryptoRate / root.cryptoRateD;
 				}
 				
 				if (plasmoid.configuration.multiFixed) { // if multiply by x checked
@@ -311,6 +317,12 @@ Item {
 			if (plasmoid.configuration.multiExternalC) { // fetch if fiat to fiat enabled
 				var resultC = getRate(plasmoid.configuration.xeUrlC, plasmoid.configuration.xeKeyC, function(rate) {
 					root.cryptoRateC = rate;
+				});
+			}
+			
+			if (plasmoid.configuration.multiExternalD) { // fetch if crypto to crypto enabled
+				var resultD = getRate(plasmoid.configuration.xeUrlD, plasmoid.configuration.xeKeyD, function(rate) {
+					root.cryptoRateD = rate;
 				});
 			}
 			

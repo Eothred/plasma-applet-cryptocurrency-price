@@ -9,15 +9,15 @@
       <label>Exchange URL</label>
       <default>https://www.bitstamp.net/api/ticker/</default>
     </entry>
-	<entry name="xeKeyA" type="String">
+    <entry name="xeKeyA" type="String">
       <label>JSON Key</label>
       <default>last</default>
     </entry>
-	<entry name="pricePrefix" type="String">
+    <entry name="pricePrefix" type="String">
       <label>Price prefix</label>
       <default>$</default>
     </entry>
-	<entry name="priceSuffix" type="String">
+    <entry name="priceSuffix" type="String">
       <label>Price suffix</label>
       <default>Ƀ</default>
     </entry>
@@ -73,7 +73,7 @@
       <label>Multiply by integer</label>
       <default>false</default>
     </entry>
-	<entry name="multiFixedInput" type="Int">
+    <entry name="multiFixedInput" type="Int">
       <label>Multiply by integer value</label>
       <default>1.00000000</default>
     </entry>
@@ -85,8 +85,8 @@
       <label>Base to fiat url</label>
       <default>https://www.bitstamp.net/api/ticker/</default>
     </entry>
-	<entry name="xeKeyB" type="String">
-      <label>Base to fiat json Key</label>
+    <entry name="xeKeyB" type="String">
+      <label>Base to fiat JSON Key</label>
       <default>last</default>
     </entry>
     <entry name="multiExternalC" type="bool">
@@ -97,9 +97,21 @@
       <label>Fiat to fiat url</label>
       <default>https://api.fixer.io/latest?base=USD</default>
     </entry>
-	<entry name="xeKeyC" type="String">
-      <label>Fiat to fiat json Key</label>
+    <entry name="xeKeyC" type="String">
+      <label>Fiat to fiat JSON Key</label>
       <default>rates.EUR</default>
+    </entry>
+    <entry name="multiExternalD" type="bool">
+      <label>Crypto to crypto</label>
+      <default>false</default>
+    </entry>
+    <entry name="xeUrlD" type="String">
+      <label>Crypto to crypto url</label>
+      <default>https://api.binance.com/api/v3/ticker/price?symbol=ETHBTC</default>
+    </entry>
+    <entry name="xeKeyD" type="String">
+      <label>Crypto to crypto JSON Key</label>
+      <default>price</default>
     </entry>
     </group>
 </kcfg>

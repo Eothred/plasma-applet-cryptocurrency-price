@@ -16,6 +16,9 @@ Item {
 	property alias cfg_multiExternalC: multiExternalC.checked
 	property alias cfg_xeUrlC: xeUrlC.text
 	property alias cfg_xeKeyC: xeKeyC.text
+	property alias cfg_multiExternalD: multiExternalD.checked
+	property alias cfg_xeUrlD: xeUrlD.text
+	property alias cfg_xeKeyD: xeKeyD.text
 	
 	GridLayout {
 		columns: 2
@@ -117,6 +120,42 @@ Item {
 		
 		TextField {
 			id: xeKeyC
+			Layout.minimumWidth: theme.mSize(theme.defaultFont).width * 18
+		}
+		
+		CheckBox {
+			id: multiExternalD
+			text: i18n("Base Unit to Other crypto:")
+			onClicked: {
+				if(!this.checked) {
+					xeUrlD.enabled = false
+					xeKeyD.enabled = false
+					} else {
+					xeUrlD.enabled = true
+					xeKeyD.enabled = true
+				}
+			}
+		}
+		
+		Label {
+		text: i18n("(e.g. XRP/BTC to XRP/ETH via ETH/BTC)")
+		}
+		
+		Label {
+			text: i18n("Base Price URL:")
+		}
+		
+		TextField {
+			id: xeUrlD
+			Layout.minimumWidth: theme.mSize(theme.defaultFont).width * 40
+		}
+		
+		Label {
+			text: i18n("JSON Key:")
+		}
+		
+		TextField {
+			id: xeKeyD
 			Layout.minimumWidth: theme.mSize(theme.defaultFont).width * 18
 		}
 	}
