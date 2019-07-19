@@ -86,7 +86,7 @@ Item {
 				text: i18n("Coinbase BTC-USD"),
 				url: "https://api.pro.coinbase.com/products/BTC-USD/ticker",
 				key: "price",
-				tooltip: "Coinbase ETH-EUR",
+				tooltip: "Coinbase BTC-USD",
 				symbol: "$"
 			}, {
 				text: i18n("Coinmarketcap BTC-USD"),
@@ -94,13 +94,13 @@ Item {
 				key: "0.price_usd",
 				tooltip: "Coinmarketcap BTC-USD",
 				symbol: "$"
-			}, /*{
-				text: i18n("GDAX BTC-USD"),
-				url: "https://api.gdax.com/products/BTC-USD/ticker",
-				key: "price",
-				tooltip: "GDAX BTC-USD",
+			}, {
+				text: i18n("Coinpaprika BTC-USD"),
+				url: "https://api.coinpaprika.com/v1/coins/btc-bitcoin/ohlcv/today",
+				key: "0.close",
+				tooltip: "CoinPaprika BTC-USD",
 				symbol: "$"
-			}, */{
+			}, {
 				text: i18n("Gemini BTC-USD"),
 				url: "https://api.gemini.com/v1/pubticker/btcusd",
 				key: "last",
