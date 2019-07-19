@@ -83,6 +83,12 @@ Item {
 				tooltip: "BTCC BTC-USD",
 				symbol: "$"
 			}, {
+				text: i18n("Coinbase BTC-USD"),
+				url: "https://api.pro.coinbase.com/products/BTC-USD/ticker",
+				key: "price",
+				tooltip: "Coinbase ETH-EUR",
+				symbol: "$"
+			}, {
 				text: i18n("Coinmarketcap BTC-USD"),
 				url: "https://api.coinmarketcap.com/v1/ticker/bitcoin/",
 				key: "0.price_usd",
