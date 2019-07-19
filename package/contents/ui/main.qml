@@ -9,14 +9,15 @@ import org.kde.kquickcontrolsaddons 2.0 as KQuickAddons
 
 Item {
 	id: root
-	
+
 	Layout.fillHeight: true
-	
+
 	property string cryptoRate: '...'
 	property string cryptoRateA: '...'
 	property string cryptoRateB: '...'
 	property string cryptoRateC: '...'
 	property string cryptoRateD: '...'
+    property string finalString: '...'
 	property bool showPricePrefix: plasmoid.configuration.showPricePrefix
 	property bool showPriceSuffix: plasmoid.configuration.showPriceSuffix
 	property bool showIcon: plasmoid.configuration.showIcon
@@ -28,7 +29,7 @@ Item {
 	property bool multiExternalB: plasmoid.configuration.multiExternalB
 	property bool multiExternalC: plasmoid.configuration.multiExternalC
 	property bool multiExternalD: plasmoid.configuration.multiExternalD
-	
+
 	Plasmoid.preferredRepresentation: Plasmoid.compactRepresentation
 	Plasmoid.toolTipTextFormat: Text.RichText
 	Plasmoid.backgroundHints: plasmoid.configuration.showBackground ? "StandardBackground" : "NoBackground"
@@ -45,11 +46,11 @@ Item {
 				return cryptoValue.paintedWidth;
 			}
 		}
-		
+
 		signal iconChanged(string iconName)
 		Layout.fillWidth: false
 		Layout.minimumWidth: minWidth
-		
+
 		KQuickAddons.IconDialog {
 			id: iconDialog
 			onIconNameChanged: {
@@ -57,7 +58,7 @@ Item {
 				plasmoid.configuration.icon = iconName
 			}
 		}
-		
+
 		MouseArea {
 			id: mouseAreaValue
 			anchors.fill: cryptoValue
@@ -67,7 +68,7 @@ Item {
 					case 'nothing':
 						action_nothing();
 						break;
-					
+
 					case 'refresh':
 					default:
 						action_refresh();
@@ -75,14 +76,14 @@ Item {
 				}
 			}
 		}
-		
+
 		MouseArea {
 			id: mouseAreaIcon
 			anchors.fill: cryptoIcon
 			hoverEnabled: true
 			enabled: root.showIcon
 		}
-		
+
 		MouseArea {
 			id: mouseAreaIcon2
 			anchors.fill: cryptoIcon2
@@ -93,11 +94,11 @@ Item {
 					case 'nothing':
 						action_nothing();
 						break;
-					
+
 					case 'refresh':
 						action_refresh();
 						break;
-					
+
 					case 'icchooser':
 					default:
 						iconDialog.open();
@@ -105,7 +106,7 @@ Item {
 				}
 			}
 		}
-		
+
 		BusyIndicator {
 			width: parent.height
 			height: parent.height
@@ -113,7 +114,7 @@ Item {
 			running: updatingRate
 			visible: updatingRate
 		}
-		
+
 		Image {
 			id: cryptoIcon
 			width: parent.height * 0.9
@@ -126,7 +127,7 @@ Item {
 			visible: root.showIcon
 			opacity: root.useCustomIcon ? 0.0 : root.updatingRate ? 0.2 : mouseAreaIcon.containsMouse ? 0.8 : 1.0
 		}
-		
+
 		PlasmaCore.IconItem {
 			id: cryptoIcon2
 			width: parent.height * 0.9
@@ -139,7 +140,7 @@ Item {
 			visible: root.showIcon
 			opacity: root.updatingRate ? 0.2 : mouseAreaIcon2.containsMouse ? 0.8 : 1.0
 		}
-		
+
 		PlasmaComponents.Label {
 			id: cryptoValue
 			height: parent.height
@@ -155,80 +156,17 @@ Item {
 			font.pixelSize: 72
 
 			text: {
-				// calculate cryptoRate based on checked options
-				root.cryptoRate = root.cryptoRateA;
-				
-				if (plasmoid.configuration.multiExternalB) { // if base to fiat checked
-					root.cryptoRate = root.cryptoRate * root.cryptoRateB;
-				}
-				
-				if (plasmoid.configuration.multiExternalC) { // if fiat to fiat checked
-					root.cryptoRate = root.cryptoRate * root.cryptoRateC;
-				}
-				
-				if (plasmoid.configuration.multiExternalD) { // if crypto to crypto checked
-					root.cryptoRate = root.cryptoRate / root.cryptoRateD;
-				}
-				
-				if (plasmoid.configuration.multiFixed) { // if multiply by x checked
-					root.cryptoRate = root.cryptoRate * plasmoid.configuration.multiFixedInput;
-				}
-				
-				if (root.controlDecimals) { // if round decimals checked
-					root.cryptoRate = Number(root.cryptoRate).toFixed(plasmoid.configuration.decPlaces);
-				}
-				
-				// for the tooltip 
+				// for the tooltip
 				if (plasmoid.configuration.ttLabel != "") { // if tooltip label not empty
 					var toolTipSubText = '<b>' + i18n(plasmoid.configuration.ttLabel) + '</b>';
 					toolTipSubText += '<br />'; // +ttLabel
-					
-					if (root.showPricePrefix) { // if show price prefix enabled
-						if (root.showPriceSuffix) { // if show price suffix enabled
-							toolTipSubText += '<b>' + plasmoid.configuration.pricePrefix + root.cryptoRate + plasmoid.configuration.priceSuffix + '</b>'; // +pricePrefix +cryptoRate +priceSuffix
-						} else {
-							toolTipSubText += '<b>' + plasmoid.configuration.pricePrefix + root.cryptoRate + '</b>'; // +pricePrefix +cryptoRate
-						}
-					} else {
-						if (root.showPriceSuffix) { // if show price suffix enabled
-							toolTipSubText += '<b>' + root.cryptoRate + plasmoid.configuration.priceSuffix + '</b>'; // +cryptoRate +priceSuffix
-						} else {
-							toolTipSubText += '<b>' + root.cryptoRate + '</b>'; +cryptoRate
-						}
-					}
+					toolTipSubText += '<b>' + root.finalString + '</b>';
 				} else {
-					if (root.showPricePrefix) { // if show price prefix enabled
-						if (root.showPriceSuffix) { // if show price suffix enabled
-							toolTipSubText = '<b>' + plasmoid.configuration.pricePrefix + root.cryptoRate + plasmoid.configuration.priceSuffix + '</b>'; // +pricePrefix +cryptoRate +priceSuffix
-						} else {
-							toolTipSubText = '<b>' + plasmoid.configuration.pricePrefix + root.cryptoRate + '</b>'; // +pricePrefix +cryptoRate
-						}
-					} else {
-						if (root.showPriceSuffix) { // if show price suffix enabled
-							toolTipSubText = '<b>' + root.cryptoRate + plasmoid.configuration.priceSuffix + '</b>'; // +cryptoRate +priceSuffix
-						} else {
-							toolTipSubText = '<b>' + root.cryptoRate + '</b>'; // +cryptoRate
-						}
-					}
+					toolTipSubText = '<b>' + root.finalString + '</b>';
 				}
 				plasmoid.toolTipSubText = toolTipSubText;
-				
-				// final text to be displayed
-				if (root.showText) { // if show price enabled
-					if (root.showPricePrefix) { // if show price prefix enabled
-						if (root.showPriceSuffix) { // if show price suffix enabled
-							(plasmoid.configuration.pricePrefix + root.cryptoRate + 	plasmoid.configuration.priceSuffix)
-						} else {
-							(plasmoid.configuration.pricePrefix + root.cryptoRate)
-						}
-					} else {
-						if (root.showPriceSuffix) { // if show price suffix enabled
-							(root.cryptoRate + plasmoid.configuration.priceSuffix)
-						} else {
-							root.cryptoRate
-						}
-					}
-				}
+
+                root.finalString
 			}
 		}
 	}
@@ -240,7 +178,7 @@ Item {
 
 	Connections {
 		target: plasmoid.configuration
-		
+
 		onXeUrlAChanged: {
 			cryptoTimer.restart();
 		}
@@ -270,7 +208,7 @@ Item {
 		running: true
 		repeat: true
 		triggeredOnStart: true
-		
+
 		function getRate(url, key, callback) {
 			if (url != "") {
 				// attempt to correct invalid or old format keys
@@ -278,7 +216,7 @@ Item {
 				var key = key.replace(/\]/g, '');
 				var key = key.replace(/^\./, '');
 				var key = key.replace(/\.\./g, '\.');
-				
+
 				var xhr = new XMLHttpRequest();
 				xhr.onreadystatechange = function() {
 					if (xhr.readyState == 4 && xhr.status == 200) {
@@ -287,7 +225,7 @@ Item {
 						for (var x = 0; x < keys.length; x++) {
 							rate = rate[keys[x]];
 						}
-						
+
 /*						if (!rate || isNaN(rate)) { // old method using eval()
 							try {
 								var rate = eval("data" + key);
@@ -295,7 +233,7 @@ Item {
 								console.log("---------error: " + err.message);
 							}
 						}*/
-						
+
 						callback(rate);
 					}
 				};
@@ -304,32 +242,71 @@ Item {
 				xhr.send(null);
 			}
 		}
-		
+
 		onTriggered: {
 			root.updatingRate = true;
-			
+
 			if (plasmoid.configuration.multiExternalB) { // fetch if base to fiat enabled
 				var resultB = getRate(plasmoid.configuration.xeUrlB, plasmoid.configuration.xeKeyB, function(rate) {
 					root.cryptoRateB = rate;
 				});
 			}
-			
+
 			if (plasmoid.configuration.multiExternalC) { // fetch if fiat to fiat enabled
 				var resultC = getRate(plasmoid.configuration.xeUrlC, plasmoid.configuration.xeKeyC, function(rate) {
 					root.cryptoRateC = rate;
 				});
 			}
-			
+
 			if (plasmoid.configuration.multiExternalD) { // fetch if crypto to crypto enabled
 				var resultD = getRate(plasmoid.configuration.xeUrlD, plasmoid.configuration.xeKeyD, function(rate) {
 					root.cryptoRateD = rate;
 				});
 			}
-			
+
 			var resultA = getRate(plasmoid.configuration.xeUrlA, plasmoid.configuration.xeKeyA, function(rate) { // fetch main rate
 				root.cryptoRateA = rate;
 				root.updatingRate = false;
-			});                
+			});
+
+        // calculate cryptoRate based on checked options
+        root.cryptoRate = root.cryptoRateA;
+
+        if (plasmoid.configuration.multiExternalB) { // if base to fiat checked
+            root.cryptoRate = root.cryptoRate * root.cryptoRateB;
+        }
+
+        if (plasmoid.configuration.multiExternalC) { // if fiat to fiat checked
+            root.cryptoRate = root.cryptoRate * root.cryptoRateC;
+        }
+
+        if (plasmoid.configuration.multiExternalD) { // if crypto to crypto checked
+            root.cryptoRate = root.cryptoRate / root.cryptoRateD;
+        }
+
+        if (plasmoid.configuration.multiFixed) { // if multiply by x checked
+            root.cryptoRate = root.cryptoRate * plasmoid.configuration.multiFixedInput;
+        }
+
+        if (root.controlDecimals) { // if round decimals checked
+            root.cryptoRate = Number(root.cryptoRate).toFixed(plasmoid.configuration.decPlaces);
+        }
+        // final text to be displayed
+        if (root.showText) { // if show price enabled
+            if (root.showPricePrefix) { // if show price prefix enabled
+                if (root.showPriceSuffix) { // if show price suffix enabled
+                    root.finalString = (plasmoid.configuration.pricePrefix + root.cryptoRate + 	plasmoid.configuration.priceSuffix);
+                } else {
+                    root.finalString = (plasmoid.configuration.pricePrefix + root.cryptoRate);
+                }
+            } else {
+                if (root.showPriceSuffix) { // if show price suffix enabled
+                    root.finalString = (root.cryptoRate + plasmoid.configuration.priceSuffix);
+                } else {
+                    root.finalString = root.cryptoRate;
+                }
+            }
+        }
 		}
 	}
 
