@@ -89,6 +89,12 @@ Item {
 				tooltip: "Coinbase BTC-USD",
 				symbol: "$"
 			}, {
+				text: i18n("CoinGecko BTC-USD"),
+				url: "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd",
+				key: "bitcoin.usd",
+				tooltip: "CoinGecko BTC-USD",
+				symbol: "$"
+			}, {
 				text: i18n("Coinmarketcap BTC-USD"),
 				url: "https://api.coinmarketcap.com/v1/ticker/bitcoin/",
 				key: "0.price_usd",
